@@ -17,3 +17,7 @@ use App\Http\Controllers\GuestBookController;
 
 Route::get('/', [GuestBookController::class, 'index']);
 Route::post('/', [GuestBookController::class, 'newPost']);
+
+Route::get('/health', function() {
+    return "healthy";
+});

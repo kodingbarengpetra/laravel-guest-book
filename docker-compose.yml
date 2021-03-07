@@ -1,0 +1,27 @@
+version: '3'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8080:80"
+        environment:
+            DB_HOST: db
+            DB_DATABASE: guestbook
+            DB_USERNAME: user
+            DB_PASSWORD: password
+        links:
+            - db
+    db:
+        image: mysql:8
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./etc/docker/var/lib/mysql:/var/lib/mysql/
+        environment:
+            MYSQL_DATABASE: guestbook
+            MYSQL_ROOT_PASSWORD: password
