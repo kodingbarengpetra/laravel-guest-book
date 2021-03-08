@@ -25,3 +25,5 @@ jobs:
           docker --version
           docker build --quiet . -t myguestbook
           aws lightsail push-container-image --service-name $CONTAINER_NAME --label guestbook --image myguestbook
+          IMAGE_NAME=$(aws lightsail get-container-images --service-name $CONTAINER_NAME | jq -r .containerImages[0].image)
+          echo $IMAGE_NAME
