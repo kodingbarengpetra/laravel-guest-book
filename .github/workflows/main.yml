@@ -18,7 +18,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-southeast-1
-      - run: |
+      - env:
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+        run: |
           aws --version
           docker --version
-          docker build . -t myguestbook
+          docker build --quiet . -t myguestbook
+          aws lightsail push-container-image --service-name $CONTAINER_NAME --label guestbook --image myguestbook
